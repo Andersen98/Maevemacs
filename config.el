@@ -113,6 +113,22 @@
 
 (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 
+(defcustom tex-my-viewer "zathura --fork -s -x \"emacsclient --eval '(progn (switch-to-buffer  (file-name-nondirectory \"'\"'\"%{input}\"'\"'\")) (goto-line %{line}))'\"" 
+  "PDF Viewer for TeX documents. You may want to fork the viewer
+so that it detects when the same document is launched twice, and
+persists when Emacs gets closed.
+
+Simple command:
+
+  zathura --fork
+
+We can use
+
+  emacsclient --eval '(progn (switch-to-buffer  (file-name-nondirectory \"%{input}\")) (goto-line %{line}))'
+
+to reverse-search a pdf using SyncTeX. Note that the quotes and double-quotes matter and must be escaped appropriately."
+:safe 'stringp)
+
 (use-package auto-package-update
   :defer nil
   :ensure t
@@ -161,12 +177,12 @@
   :defer nil
   :preface
   (defun update-config ()
-    "Update Witchmacs to the latest version."
+    "Update Maevemacs to the latest version."
     (interactive)
     (let ((dir (expand-file-name user-emacs-directory)))
       (if (file-exists-p dir)
           (progn
-            (message "Witchmacs is updating!")
+            (message "Maevemacs is updating!")
             (cd dir)
             (shell-command "git pull")
             (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
@@ -179,9 +195,9 @@
     (lisp-interaction-mode))
   :config
   (dashboard-setup-startup-hook)
-  (setq dashboard-items '((recents . 5)))
-  (setq dashboard-banner-logo-title "W I T C H M A C S - The cutest Emacs distribution!")
-  (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
+  (setq dashboard-items '((recents . 9)))
+  (setq dashboard-banner-logo-title "M A E V E M A C S - The cutest Emacs distribution!")
+  (setq dashboard-startup-banner "~/.emacs.d/AquaSplashScreen.png")
   (setq dashboard-center-content t)
   (setq dashboard-show-shortcuts nil)
   (setq dashboard-set-init-info t)
@@ -192,18 +208,18 @@
   (setq dashboard-navigator-buttons
         `(;; line1
           ((,nil
-            "Witchmacs on github"
-            "Open Witchmacs' github page on your browser"
-            (lambda (&rest _) (browse-url "https://github.com/snackon/witchmacs"))
+            "Maevemacs on github"
+            "Open Maevemacs' github page on your browser"
+            (lambda (&rest _i) (browse-url "https://github.com/Andersen98/Maevemacs"))
             'default)
            (nil
-            "Witchmacs crash course"
-            "Open Witchmacs' introduction to Emacs"
-            (lambda (&rest _) (find-file "~/.emacs.d/Witcheat.org"))
+            "Maevemacs crash course"
+            "Open Maevemacs' introduction to Emacs"
+            (lambda (&rest _) (find-file "~/.emacs.d/Maevecheat.org"))
             'default)
            (nil
-            "Update Witchmacs"
-            "Get the latest Witchmacs update. Check out the github commits for changes!"
+            "Update Maevemacs"
+            "Get the latest Maevemacs update. Check out the github commits for changes!"
             (lambda (&rest _) (update-config))
             'default)
            )
@@ -215,7 +231,7 @@
             'default)
            (nil
             "Open config.org"
-            "Open Witchmacs' configuration file for easy editing"
+            "Open Maevemacs' configuration file for easy editing"
             (lambda (&rest _) (find-file "~/.emacs.d/config.org"))
             'default)))))
 
@@ -387,7 +403,7 @@
   :diminish (meghanada-mode company-mode irony-mode)
   :config
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 1)
+  (setq company-minimum-prefix-length 3)
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-n") #'company-select-next)

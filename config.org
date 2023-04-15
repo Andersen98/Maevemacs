@@ -332,7 +332,7 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
     (dashboard-setup-startup-hook)
     (setq dashboard-items '((recents . 9)))
     (setq dashboard-banner-logo-title "M A E V E M A C S - The cutest Emacs distribution!")
-    (setq dashboard-startup-banner "~/.emacs.d/Aqua.png")
+    (setq dashboard-startup-banner "~/.emacs.d/AquaSplashScreen.png")
     (setq dashboard-center-content t)
     (setq dashboard-show-shortcuts nil)
     (setq dashboard-set-init-info t)
