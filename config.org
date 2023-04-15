@@ -23,7 +23,7 @@ Yes - No! layers! onions have layers! ogres have layers!
 As opposed to many other Emacs distributions, Witchmacs has ZERO customization layers which means you can just jump in, look at the config file and start editing away! After all, Emacs works best when it's customized to your own liking!
 * Quick install
 #+BEGIN_SRC 
-git clone https://github.com/snackon/Witchmacs ~/.emacs.d
+git clone https://github.com/Andersen98/Maevemacs ~/.emacs.d
 #+END_SRC
 After running this command, the first time you run Emacs will download all of the specified packages in the config.org file, so please be patient!
 
@@ -214,6 +214,24 @@ Eshell cannot handle ncurses programs and in certain interpreters (Python, GHCi)
 
   (global-set-key (kbd "<s-C-return>") 'eshell-other-window)
 #+END_SRC
+*** SyncTeX Use Zathura
+#+begin_src emacs-lisp
+  (defcustom tex-my-viewer "zathura --fork -s -x \"emacsclient --eval '(progn (switch-to-buffer  (file-name-nondirectory \"'\"'\"%{input}\"'\"'\")) (goto-line %{line}))'\"" 
+  "PDF Viewer for TeX documents. You may want to fork the viewer
+so that it detects when the same document is launched twice, and
+persists when Emacs gets closed.
+
+Simple command:
+
+  zathura --fork
+
+We can use
+
+  emacsclient --eval '(progn (switch-to-buffer  (file-name-nondirectory \"%{input}\")) (goto-line %{line}))'
+
+to reverse-search a pdf using SyncTeX. Note that the quotes and double-quotes matter and must be escaped appropriately."
+:safe 'stringp)
+#+end_src
 * Use-package section
 ** Initialize =auto-package-update=
 *** Description
@@ -294,12 +312,12 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
     :defer nil
     :preface
     (defun update-config ()
-      "Update Witchmacs to the latest version."
+      "Update Maevemacs to the latest version."
       (interactive)
       (let ((dir (expand-file-name user-emacs-directory)))
         (if (file-exists-p dir)
             (progn
-              (message "Witchmacs is updating!")
+              (message "Maevemacs is updating!")
               (cd dir)
               (shell-command "git pull")
               (message "Update finished. Switch to the messages buffer to see changes and then restart Emacs"))
@@ -312,9 +330,9 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
       (lisp-interaction-mode))
     :config
     (dashboard-setup-startup-hook)
-    (setq dashboard-items '((recents . 5)))
-    (setq dashboard-banner-logo-title "W I T C H M A C S - The cutest Emacs distribution!")
-    (setq dashboard-startup-banner "~/.emacs.d/marivector.png")
+    (setq dashboard-items '((recents . 9)))
+    (setq dashboard-banner-logo-title "M A E V E M A C S - The cutest Emacs distribution!")
+    (setq dashboard-startup-banner "~/.emacs.d/Aqua.png")
     (setq dashboard-center-content t)
     (setq dashboard-show-shortcuts nil)
     (setq dashboard-set-init-info t)
@@ -325,18 +343,18 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
     (setq dashboard-navigator-buttons
           `(;; line1
             ((,nil
-              "Witchmacs on github"
-              "Open Witchmacs' github page on your browser"
-              (lambda (&rest _) (browse-url "https://github.com/snackon/witchmacs"))
+              "Maevemacs on github"
+              "Open Maevemacs' github page on your browser"
+              (lambda (&rest _i) (browse-url "https://github.com/Andersen98/Maevemacs"))
               'default)
              (nil
-              "Witchmacs crash course"
-              "Open Witchmacs' introduction to Emacs"
-              (lambda (&rest _) (find-file "~/.emacs.d/Witcheat.org"))
+              "Maevemacs crash course"
+              "Open Maevemacs' introduction to Emacs"
+              (lambda (&rest _) (find-file "~/.emacs.d/Maevecheat.org"))
               'default)
              (nil
-              "Update Witchmacs"
-              "Get the latest Witchmacs update. Check out the github commits for changes!"
+              "Update Maevemacs"
+              "Get the latest Maevemacs update. Check out the github commits for changes!"
               (lambda (&rest _) (update-config))
               'default)
              )
@@ -348,7 +366,7 @@ The frontend of Witchmacs; without this there'd be no Marisa in your Emacs start
               'default)
              (nil
               "Open config.org"
-              "Open Witchmacs' configuration file for easy editing"
+              "Open Maevemacs' configuration file for easy editing"
               (lambda (&rest _) (find-file "~/.emacs.d/config.org"))
               'default)))))
 #+END_SRC
@@ -657,3 +675,6 @@ I use meghanada to provide very neat autocompletion when editing Java files. I u
     (setq meghanada-java-path "java")
     (setq meghanada-maven-path "mvn"))
 #+END_SRC
+** SyncTeX
+*** Description
+SyncTeX is a method that enables synchronization between a TeX source file and the resulting PDF output. I use it with zathura, so make sure to install that on your system as well as SyncTex!
